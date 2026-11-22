@@ -19,6 +19,7 @@ Trang là HTML/CSS/JS thuần, không cần cài đặt hay build gì cả.
 |---|---|
 | Chữ, câu hỏi, danh sách ảnh, nhạc | `js/config.js` |
 | Lời chúc | `js/wishes.js` |
+| Bật/tắt hiệu ứng (tâm ngắm, chữ giải mã, bảng thông báo, bụi sáng…) | mục `effects` trong `js/config.js` |
 | Màu sắc, font | `css/style.css` (phần `:root` ở đầu file) |
 | Ảnh | thư mục `assets/photos/` |
 | Nhạc | thư mục `assets/audio/` |

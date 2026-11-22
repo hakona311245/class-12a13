@@ -91,6 +91,28 @@ window.SITE = {
     button: "HOÀN TẤT CHIẾN DỊCH",
   },
 
+  // Hiệu ứng — đặt false để tắt từng cái
+  effects: {
+    crosshair: true,   // con trỏ chuột hình tâm ngắm (chỉ trên máy tính)
+    hitmarker: true,   // dấu X khi bấm chuột / chạm
+    scramble: true,    // tiêu đề nhảy chữ kiểu giải mã khi vào màn mới
+    killfeed: true,    // bảng thông báo góc phải
+    particles: true,   // bụi sáng bay trên nền
+    sweep: true,       // thanh quét radar chạy dọc màn hình
+    spotlight: true,   // khung sáng nhẹ theo chuột
+    // Chữ trong bảng thông báo. {from} = tên người gửi, {n} {total} = số thứ tự
+    feed: {
+      connected: "HỆ THỐNG ▸ Đặc vụ đã kết nối máy chủ",
+      quizOk: "XÁC MINH THÀNH CÔNG ▸ +100 XP",
+      quizBad: "MẬT MÃ SAI ▸ −10 HP",
+      photo: "Đã dò tần số TAPE {n} ({n}/{total})",
+      photosDone: "HOÀN TẤT DÒ SÓNG ▸ Mở khóa hộp thư",
+      wish: "{from}",
+      wishTarget: "NAM 12A13",
+      finale: "MVP ▸ TOÀN BỘ CHIẾN BINH NAM 12A13",
+    },
+  },
+
   // Màn hình kết thúc
   finale: {
     tag: "HUY HIỆU MVP: TOÀN BỘ CHIẾN BINH NAM 12A13",

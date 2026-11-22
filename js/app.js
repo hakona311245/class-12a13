@@ -19,6 +19,8 @@
     get(k) { try { return localStorage.getItem(k); } catch { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch { /* bỏ qua */ } },
   };
+  // báo sự kiện cho js/effects.js
+  const emit = (name, detail) => document.dispatchEvent(new CustomEvent(`gti:${name}`, { detail }));
 
   /* ---------- đổ chữ từ config vào các [data-bind] ---------- */
   document.title = S.meta.pageTitle;
@@ -48,6 +50,7 @@
     });
     window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
     enterHooks[id]?.();
+    emit("screen", { id, el: $(`#screen-${id}`) });
   }
   const next = () => go(order[order.indexOf(current) + 1]);
 
@@ -186,6 +189,7 @@
           b.querySelector("small").textContent = "✓ ĐÚNG";
           status.className = "quiz-status ok";
           status.textContent = q.correct;
+          emit("quiz", { ok: true, panel: $("#quizPanel") });
           const last = qIndex === total - 1;
           const cont = el("button", "btn btn-primary", last ? S.quiz.continueButton : "CÂU TIẾP THEO");
           cont.type = "button";
@@ -204,6 +208,7 @@
           b.querySelector("small").textContent = "✗ SAI";
           status.className = "quiz-status bad";
           status.textContent = q.wrong;
+          emit("quiz", { ok: false, panel: $("#quizPanel") });
         }
       });
       box.appendChild(b);
@@ -256,8 +261,10 @@
 
     [...thumbs.children].forEach((t, k) => t.classList.toggle("is-current", k === pIndex));
     thumbs.children[pIndex].scrollIntoView({ block: "nearest", inline: "center", behavior: reducedMotion ? "auto" : "smooth" });
+    const isNew = !seen.has(pIndex);
     seen.add(pIndex);
     thumbs.children[pIndex].classList.add("seen");
+    if (!instant) emit("photo", { index: pIndex, isNew, seen: seen.size, total: photos.length });
     const pct = (seen.size / photos.length) * 100;
     $("#scanProgressBar").style.width = `${pct}%`;
     $("#scanProgressText").textContent =
