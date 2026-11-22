@@ -1,0 +1,7 @@
+# File dữ liệu gốc (đã chuyển sang js/wishes.js)
+*.xlsx
+# Cấu hình riêng của công cụ
+.claude/
+__pycache__/
+.DS_Store
+Thumbs.db

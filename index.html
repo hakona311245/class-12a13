@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0a0e10" />
+  <title>Chiến Dịch 19.11</title>
+  <meta name="description" content="Lời chúc 19/11 gửi các chiến binh nam 12A13" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 30 28H2z' fill='%2319f5a0'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="fx-grid" aria-hidden="true"></div>
+  <div class="fx-scan" aria-hidden="true"></div>
+
+  <!-- ===== Thanh trên cùng ===== -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text"><span data-bind="meta.unit"></span> // <span data-bind="meta.squad"></span></span>
+    </div>
+
+    <div class="player" id="player" hidden>
+      <button class="player-btn" id="playBtn" type="button" aria-label="Phát / tạm dừng nhạc">
+        <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></svg>
+      </button>
+      <div class="player-info">
+        <div class="player-title"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="trackName"></span></div>
+        <div class="player-seek">
+          <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Tua nhạc" />
+          <span class="player-time" id="trackTime">0:00</span>
+        </div>
+      </div>
+      <button class="player-btn small" id="muteBtn" type="button" aria-label="Tắt / bật tiếng">
+        <svg class="i-vol" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="i-mute" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="m16 9 6 6m0-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="status-chip"><span class="dot" aria-hidden="true"></span><span data-bind="meta.status"></span></div>
+  </header>
+
+  <main id="app">
+    <!-- ===== 0. Khởi động ===== -->
+    <section class="screen is-active" id="screen-boot">
+      <div class="boot">
+        <div class="boot-reticle" aria-hidden="true"><span></span></div>
+        <ul class="boot-log" id="bootLog"></ul>
+        <div class="boot-bar"><span id="bootBar"></span></div>
+        <button class="btn btn-primary boot-btn" id="bootBtn" type="button" disabled>
+          <span data-bind="boot.button"></span>
+        </button>
+        <p class="boot-hint" data-bind="boot.hint"></p>
+      </div>
+    </section>
+
+    <!-- ===== 1. Giao nhiệm vụ ===== -->
+    <section class="screen" id="screen-briefing">
+      <div class="panel panel-narrow">
+        <span class="tag" data-bind="briefing.tag"></span>
+        <h1 class="title"><span data-bind="briefing.titleLead"></span> <em data-bind="briefing.titleAccent"></em></h1>
+        <p class="lead typed" id="briefingBody"></p>
+        <button class="btn btn-primary" id="briefingBtn" type="button"><span data-bind="briefing.button"></span> <b aria-hidden="true">&gt;&gt;</b></button>
+      </div>
+    </section>
+
+    <!-- ===== 2. Câu hỏi xác minh ===== -->
+    <section class="screen" id="screen-quiz">
+      <div class="panel panel-narrow" id="quizPanel">
+        <span class="tag" data-bind="quiz.tag"></span>
+        <h2 class="title" id="quizQuestion"></h2>
+        <p class="lead" data-bind="quiz.intro"></p>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-status" id="quizStatus" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ===== 3. Kho ảnh ===== -->
+    <section class="screen" id="screen-gallery">
+      <div class="panel panel-wide">
+        <span class="tag" data-bind="gallery.tag"></span>
+        <h2 class="title" data-bind="gallery.title"></h2>
+        <p class="lead" data-bind="gallery.subtitle"></p>
+
+        <div class="viewer" id="viewer">
+          <div class="viewer-frame">
+            <img id="viewerImg" alt="" />
+            <div class="viewer-hud" aria-hidden="true">
+              <span class="hud-corner tl"></span><span class="hud-corner tr"></span>
+              <span class="hud-corner bl"></span><span class="hud-corner br"></span>
+              <span class="hud-rec"><i></i><span id="viewerFreq"></span></span>
+              <span class="hud-cross"></span>
+            </div>
+            <div class="viewer-static" id="viewerStatic" aria-hidden="true"></div>
+          </div>
+          <div class="viewer-bar">
+            <button class="btn btn-ghost" id="prevBtn" type="button" aria-label="Ảnh trước">&lt;&lt;</button>
+            <div class="viewer-meta">
+              <span id="viewerLabel"></span>
+              <span class="viewer-caption" id="viewerCaption"></span>
+            </div>
+            <button class="btn btn-primary" id="nextBtn" type="button">DÒ SÓNG TIẾP <b aria-hidden="true">&gt;</b></button>
+          </div>
+          <div class="thumbs" id="thumbs"></div>
+          <div class="scan-progress"><span id="scanProgressBar"></span><em id="scanProgressText"></em></div>
+        </div>
+
+        <div class="notice" id="mailNotice">
+          <div>
+            <strong><span aria-hidden="true">⚠</span> <span data-bind="gallery.noticeTitle"></span> (<span id="wishCount"></span> BẢN GHI)</strong>
+            <p data-bind="gallery.noticeBody"></p>
+          </div>
+          <button class="btn btn-amber" id="mailBtn" type="button"><span data-bind="gallery.button"></span> <b aria-hidden="true">&gt;&gt;</b></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. Hộp thư ===== -->
+    <section class="screen" id="screen-mailbox">
+      <div class="panel panel-wide">
+        <span class="tag"><span data-bind="mailbox.tag"></span> // ĐÃ GIẢI MÃ <span id="wishCount2"></span> BẢN GHI</span>
+        <h2 class="title" data-bind="mailbox.title"></h2>
+        <div class="wishes" id="wishes"></div>
+        <div class="center">
+          <button class="btn btn-primary" id="finishBtn" type="button"><span data-bind="mailbox.button"></span> <b aria-hidden="true">&gt;&gt;</b></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5. Kết thúc ===== -->
+    <section class="screen" id="screen-finale">
+      <canvas class="tracers" id="tracers" aria-hidden="true"></canvas>
+      <div class="panel panel-narrow finale">
+        <div class="medal" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><path class="medal-ring" d="M60 6 106 32v56L60 114 14 88V32z"/><path class="medal-star" d="m60 30 8.8 18 19.8 2.9-14.3 14 3.4 19.7L60 75.3 42.3 84.6l3.4-19.7-14.3-14 19.8-2.9z"/></svg>
+        </div>
+        <span class="tag" data-bind="finale.tag"></span>
+        <h2 class="title" data-bind="finale.title"></h2>
+        <p class="lead" data-bind="finale.message"></p>
+        <div class="stats" id="stats"></div>
+        <p class="muted" data-bind="finale.ratingPrompt"></p>
+        <div class="stars" id="stars" role="radiogroup" aria-label="Đánh giá chiến dịch"></div>
+        <p class="rating-reply" id="ratingReply" aria-live="polite"></p>
+        <button class="btn btn-primary" id="replayBtn" type="button"><span data-bind="finale.replay"></span></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="hudfoot" aria-hidden="true">
+    <span id="clock">--:--:--</span>
+    <span class="steps" id="steps"></span>
+    <span>GRID 19-11 · OP-12A13</span>
+  </footer>
+
+  <audio id="bgm" preload="auto" playsinline></audio>
+
+  <script src="js/config.js"></script>
+  <script src="js/wishes.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
