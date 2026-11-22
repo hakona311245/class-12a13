@@ -185,7 +185,7 @@
           b.classList.add("is-correct");
           b.querySelector("small").textContent = "✓ ĐÚNG";
           status.className = "quiz-status ok";
-          status.textContent = `✅ ${q.correct}`;
+          status.textContent = q.correct;
           const last = qIndex === total - 1;
           const cont = el("button", "btn btn-primary", last ? S.quiz.continueButton : "CÂU TIẾP THEO");
           cont.type = "button";
@@ -203,7 +203,7 @@
           b.disabled = true;
           b.querySelector("small").textContent = "✗ SAI";
           status.className = "quiz-status bad";
-          status.textContent = `⛔ ${q.wrong}`;
+          status.textContent = q.wrong;
         }
       });
       box.appendChild(b);
